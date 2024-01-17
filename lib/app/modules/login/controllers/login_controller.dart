@@ -12,9 +12,9 @@ class LoginController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  //TODO: Implement LoginController
 
   final count = 0.obs;
-
   @override
   void onInit() {
     super.onInit();
@@ -23,6 +23,10 @@ class LoginController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    String status = StorageProvider.read(StorageKey.status);
+    if(status == "logged"){
+      Get.offAllNamed(Routes.HOME);
+    }
   }
 
   @override
@@ -33,7 +37,6 @@ class LoginController extends GetxController {
   void increment() => count.value++;
 
   final loadingLogin = false.obs;
-
   login() async {
     loadingLogin(true);
     try {
@@ -54,13 +57,13 @@ class LoginController extends GetxController {
         }
       }
       loadingLogin(false);
-    }on dio.DioException catch (e) {
+    } on dio.DioException catch (e) {
       loadingLogin(false);
       Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
-    }catch (e) {
+    } catch (e) {
       loadingLogin(false);
-      Get.snackbar("Sorry", e.toString() ?? "", backgroundColor: Colors.red);
-      throw Exception('Error $e');
+      Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
+      throw Exception('Error: $e');
     }
   }
-}
+    }

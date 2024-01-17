@@ -6,6 +6,7 @@ import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,47 +15,37 @@ class LoginView extends GetView<LoginController> {
         centerTitle: true,
       ),
       body: Center(
-        child: Form(key:  controller.formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              controller: controller.passwordController,
-              decoration: InputDecoration(
-                hintText: "masukan username"),
-                validator: ( value){
-                if(value!.isEmpty){
-                  return "username tidak boleh kosong";
-                }
-                return null;
-          },
-              ),
-            TextFormField (
-              controller: controller.passwordController,
-              decoration: InputDecoration(
-                  hintText: "masukan password"),
-              validator: ( value){
-                if(value!.isEmpty){
-                  return "password tidak boleh kosong";
-                }
-                return null;
-              },
+          child: Form(key: controller.formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: controller.usernameController,
+                  decoration: InputDecoration(hintText: "Masukan Username"),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Username tidak boleh kosong";
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: controller.passwordController,
+                  decoration: InputDecoration(hintText: "Masukan Password"),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Password tidak boleh kosong";
+                    }
+                    return null;
+                  },
+                ),
+                Obx(() => controller.loadingLogin.value?Center(child: CircularProgressIndicator(),):ElevatedButton(
+                    onPressed: () {
+                      controller.login();
+                    },
+                    child: Text("Login")))
+              ],
             ),
-
-            Obx(() =>
-            controller.loadingLogin.value?
-            CircularProgressIndicator():
-            ElevatedButton(onPressed: (){
-              controller.login();
-
-            },
-
-                child: Text("login")),
-            )
-          ],
-
-        ),
-        )),
-      );
-
+          )),
+    );
   }
 }
