@@ -1,24 +1,19 @@
-import 'package:dio/dio.dart';
-import 'package:dio/dio.dart';
-import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:petugasperpus/app/data/constant/endpoint.dart';
-import 'package:petugasperpus/app/data/provaider/API_provaider.dart';
-import 'package:petugasperpus/app/routes/app_pages.dart';
-import 'package:petugasperpus/app/data/provaider/storage_provaider.dart';
+import 'package:petugasperpus/app/data/provider/api_provider.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:petugasperpus/app/data/provider/storage_provider.dart';
 
-
+import '../../../data/provaider/API_provaider.dart';
 
 class AddBookController extends GetxController {
   //TODO: Implement AddBookController
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController judulController = TextEditingController();
   final TextEditingController penulisController = TextEditingController();
   final TextEditingController penerbitController = TextEditingController();
   final TextEditingController tahunController = TextEditingController();
-
 
   final count = 0.obs;
   @override
@@ -46,7 +41,7 @@ class AddBookController extends GetxController {
       FocusScope.of(Get.context!).unfocus();
       formKey.currentState?.save();
       if (formKey.currentState!.validate()) {
-        final response = await ApiProvider.instance().post(Endpoint.login,
+        final response = await ApiProvider.instance().post(Endpoint.book,
             data:
             {
               "judul": judulController.text.toString(),
@@ -55,20 +50,19 @@ class AddBookController extends GetxController {
               "tahun_terbit": int.parse(tahunController.text.toString())
             }
         );
-        if (response.statusCode == 200) {
-          await StorageProvider.write(StorageKey.status, "logged");
-          Get.offAllNamed(Routes.HOME);
+        if (response.statusCode == 201) {
+          Get.back();
         } else {
           Get.snackbar("Sorry", "Login Gagal", backgroundColor: Colors.orange);
         }
       }
       loadingBook(false);
-    }on dio.DioException catch (e) {
+    } on dio.DioException catch (e) {
       loadingBook(false);
       Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
-    }catch (e) {
+    } catch (e) {
       loadingBook(false);
-      Get.snackbar("Sorry", e.toString() ?? "", backgroundColor: Colors.red);
+      Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
       throw Exception('Error $e');
     }
   }

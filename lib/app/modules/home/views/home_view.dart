@@ -14,19 +14,15 @@ class HomeView extends GetView<HomeController> {
         title: const Text('HomeView'),
         centerTitle: true,
       ),
-      body:  Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-            onPressed: () => Get.toNamed(Routes.BOOK),
-      child: Text("Book"),
-    ), // ElevatedButton
-    ElevatedButton(
-    onPressed: () => Get.toNamed(Routes.PEMINJAMAN),
-    child: Text("Peminjaman"),
-    )
-          ],
-        ),
+      body: Center(
+          child: Column(
+            children: [
+              ElevatedButton(onPressed: ()=>Get.toNamed(Routes.BOOK),
+                  child: Text("Buku")),
+              ElevatedButton(onPressed: ()=>Get.toNamed(Routes.PEMINJAMAN),
+                  child: Text("Peminjaman")),
+            ],
+          )
       ),
     );
   }

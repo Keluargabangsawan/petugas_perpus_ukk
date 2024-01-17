@@ -13,46 +13,43 @@ class AddBookView extends GetView<AddBookController> {
           title: const Text('AddBookView'),
           centerTitle: true,
         ),
-        body: Form(
-          key: controller.formKey,
+        body: Form(key: controller.formKey,
           child: Column(
             children: [
               TextFormField(
                 controller: controller.judulController,
-                decoration: InputDecoration(hintText: "Masukkan Judul"),
+                decoration: InputDecoration(hintText: "Masukan Judul Buku"),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Judul tidak boleh kosong";
+                    return "Judul buku tidak boleh kosong";
                   }
                   return null;
                 },
               ),
               TextFormField(
                 controller: controller.penulisController,
-                decoration: InputDecoration(hintText: "Masukkan Penulis"),
+                decoration: InputDecoration(hintText: "Masukan Nama Penulis"),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Penulis tidak boleh kosong";
+                    return "Nama penulis tidak boleh kosong";
                   }
                   return null;
                 },
-              ),
-              TextFormField(
+              ),TextFormField(
                 controller: controller.penerbitController,
-                decoration: InputDecoration(hintText: "Masukkan Penerbit"),
+                decoration: InputDecoration(hintText: "Masukan Nama Pernerbit"),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Penerbit tidak boleh kosong";
+                    return "Nama penerbit tidak boleh kosong";
                   }
                   return null;
                 },
-              ),
-              TextFormField(
+              ),TextFormField(
                 controller: controller.tahunController,
-                decoration: InputDecoration(hintText: "Masukkan Tahun"),
+                decoration: InputDecoration(hintText: "Masukan Tahun Terbit"),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Tahun tidak boleh kosong";
+                    return "Tahun terbit tidak boleh kosong";
                   }
                   return null;
                 },
@@ -60,12 +57,12 @@ class AddBookView extends GetView<AddBookController> {
               Obx(() =>
               controller.loadingBook.value?
               CircularProgressIndicator():
-              ElevatedButton(onPressed: (){
+              ElevatedButton(onPressed: () {
                 controller.addBook();
-              },
-                  child: Text("Login")))
+              }, child: Text("Tambah")))
             ],
           ),
         )
     );
-  }}
+  }
+}
